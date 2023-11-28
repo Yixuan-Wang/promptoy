@@ -1,6 +1,6 @@
 import dotenv
 
-if __name__ == '__main__':
+def test_anthropic():
     dotenv.load_dotenv()
 
     from promptoy.interface.message import MessageRole

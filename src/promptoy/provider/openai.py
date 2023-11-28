@@ -7,7 +7,8 @@ from typing import Iterable, Never, NotRequired, Optional, TypedDict, Unpack
 from openai import OpenAI as OpenAIClient
 
 from promptoy.interface.chat import Chat, MakeChat
-from promptoy.interface.message import MessageRole, SomeMessage, into_message
+from promptoy.interface.message import SomeMessage
+from promptoy.interface.message.format import format_one_message_into_openai
 
 
 class ModelOpenAI(str, Enum):
@@ -50,22 +51,6 @@ class EndpointOpenAI(
     #     return self.async_client
 
     @staticmethod
-    def __format_one_message(message: SomeMessage):
-        message = into_message(message)
-        match message.role:
-            case MessageRole.HUMAN:
-                return dict(role="user", content=message.content)
-            case MessageRole.ASSISTANT:
-                return dict(role="assistant", content=message.content)
-            case MessageRole.SYSTEM:
-                return dict(role="system", content=message.content)
-            case MessageRole.TOOL:
-                # TODO[tool]
-                raise NotImplementedError("Tools are not yet implemented.")
-            case _:
-                return dict(role="user", content=message.content, name=message.role)
-
-    @staticmethod
     def format_message(messages: Iterable[SomeMessage]):
         """
         Format messages into OpenAI's API format (an array of maps).
@@ -77,7 +62,7 @@ class EndpointOpenAI(
             messages (Iterable[TIntoMessage]): Iterable of standard `Message`s.
         """
 
-        return list(map(EndpointOpenAI.__format_one_message, messages))
+        return list(map(format_one_message_into_openai, messages))
 
     def make_chat(
         self,

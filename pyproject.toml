@@ -24,6 +24,9 @@ dev = [
     "python-dotenv>=1.0.0",
     "pydantic>=2.5.1",
 ]
+llama-cpp = [
+    "llama-cpp-python>=0.2.20",
+]
 
 [build-system]
 requires = ["pdm-backend"]
