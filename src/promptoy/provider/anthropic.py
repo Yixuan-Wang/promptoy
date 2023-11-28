@@ -3,12 +3,11 @@ from __future__ import annotations
 from collections.abc import Iterable
 from dataclasses import dataclass, field
 from enum import StrEnum
-from tkinter import N
 from typing import Optional, Never, TypedDict, NotRequired, Unpack
 
 from anthropic import Anthropic
-from promptoy.interface.chat import MakeChat, Chat
 
+from promptoy.interface.chat import MakeChat, Chat
 from promptoy.interface.message import MessageRole, SomeMessage, into_message
 
 
