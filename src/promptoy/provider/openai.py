@@ -70,9 +70,12 @@ class EndpointOpenAI(
     ) -> Chat[Never]:
         def _(messages: Iterable[SomeMessage], **ctx: Never) -> str:
             choices = self.get_client().chat.completions.create(
-                model=str(params["model"]),
-                temperature=params.get("temperature"),
-                messages=self.format_message(messages),  # type: ignore
+                **{
+                    **params,
+                    "model": str(params["model"]),
+                    "messages": self.format_message(messages),  # type: ignore
+                    "temperature": params.get("temperature"),
+                }
             ).choices
 
             if len(choices) == 0:

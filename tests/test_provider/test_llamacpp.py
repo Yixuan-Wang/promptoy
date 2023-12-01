@@ -17,7 +17,10 @@ def test_llamacpp():
     ]
     chat = endpoint.make_chat(
         model=os.environ["PATH_LLAMA_MODEL"],
-        gpu_layers=16,
+        model_params={
+            "n_gpu_layers": -1,
+            "n_ctx": 4096,
+        },
     )
     result = chat(messages)
     print(result)

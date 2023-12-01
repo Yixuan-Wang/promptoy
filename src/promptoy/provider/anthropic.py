@@ -100,11 +100,14 @@ class EndpointAnthropic(
         def _(messages: Iterable[SomeMessage], **ctx: Never) -> str:
             prompt = self.format_message(messages, validate=True)
             return self.get_client().completions.create(
-                prompt=prompt,
-                model=str(params["model"]),
-                stream=False,
-                max_tokens_to_sample=params.get("max_tokens") or 1024,  # type: ignore
-                temperature=params.get("temperature") or 1.0,  # type: ignore
+                **{
+                    **params,
+                    "prompt": prompt,
+                    "model": str(params["model"]),
+                    "stream": False,
+                    "max_tokens_to_sample": params.get("max_tokens") or 1024,
+                    "temperature": params.get("temperature") or 1.0,
+                }
             ).completion
 
         return _
