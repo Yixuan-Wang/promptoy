@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 from typing import Iterable, Never, NotRequired, Optional, TypedDict, Unpack
 
 from openai import OpenAI as OpenAIClient
@@ -11,7 +11,7 @@ from promptoy.interface.message import SomeMessage
 from promptoy.interface.message.format import format_one_message_into_openai
 
 
-class ModelOpenAI(str, Enum):
+class ModelOpenAI(StrEnum):
     GPT_3_5_TURBO = "gpt-3.5-turbo-1106"
     GPT_4 = "gpt-4"
     GPT_4_TURBO = "gpt-4-1106-preview"
